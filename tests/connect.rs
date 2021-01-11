@@ -27,7 +27,7 @@ async fn can_connect() {
         let mut tx = tx.clone();
         tokio::spawn(async move {
             let delay_ms = n_tasks - i;
-            tokio::time::delay_for(tokio::time::Duration::from_millis(delay_ms as u64)).await;
+            tokio::time::sleep(tokio::time::Duration::from_millis(delay_ms as u64)).await;
             let conn = pool.get().await.expect("Should get connection");
             tx.send(conn.create_channel().await).await.unwrap();
         });
